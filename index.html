@@ -67,14 +67,16 @@
             background-color: rgba(20, 20, 20, 0.9);
             padding: 30px;
             border-radius: 0;
-            text-align: center;
-            max-width: 400px;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+            text-align: left;
+            max-width: 500px;
             width: 90%;
             border: 1px solid #fff;
             position: relative;
             overflow: hidden;
             z-index: 10;
             display: none;
+            backdrop-filter: blur(5px);
         }
         
         /* White accent line */
@@ -93,16 +95,18 @@
             color: #fff;
             margin-bottom: 5px;
             font-size: 1rem;
-            text-align: left;
-            padding-left: 15px;
+            letter-spacing: 1px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: 2px solid #fff;
+            animation: typing 3s steps(30, end), blink-caret 0.75s step-end infinite;
         }
         
         .password-form {
             display: flex;
             flex-direction: column;
-            gap: 5px;
-            margin-top: 10px;
-            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
         }
         
         input[type="password"] {
@@ -115,7 +119,8 @@
             text-align: left;
             letter-spacing: 1px;
             font-family: 'Share Tech Mono', monospace;
-            width: 90%;
+            width: 100%;
+            box-sizing: border-box;
         }
         
         input[type="password"]::placeholder {
@@ -132,16 +137,22 @@
             background: transparent;
             color: #fff;
             border: 1px solid #fff;
-            padding: 12px 25px;
+            padding: 12px;
             border-radius: 0;
             cursor: pointer;
             font-size: 16px;
             transition: all 0.3s;
-            margin-top: 15px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            margin-top: 10px;
         }
         
         button:hover {
             background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
         
         .error {
@@ -149,29 +160,44 @@
             margin-top: 10px;
             display: none;
             font-size: 14px;
+            text-shadow: 0 0 5px rgba(255, 85, 85, 0.5);
         }
         
-        /* Loading Screen */
+        /* Loading Screen - Now centered under input */
         .loading-screen {
             display: none;
             flex-direction: column;
-            align-items: center;
+            align-items: flex-start;
             justify-content: center;
+            gap: 10px;
+            position: relative;
+            width: 100%;
             margin-top: 20px;
         }
         
-        .loading-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 90%;
+        .loading-text {
+            color: #aaa;
+            font-size: 0.9rem;
+            position: relative;
+            height: 20px;
+            width: 100%;
+        }
+        
+        .loading-text::after {
+            content: "DECRYPTING ACCESS";
+            position: absolute;
+            left: 0;
+            top: 0;
+            animation: loadingDots 2s infinite steps(4);
         }
         
         .loading-bar {
-            height: 3px;
-            flex-grow: 1;
+            width: 100%;
+            height: 2px;
             background: rgba(85, 85, 85, 0.5);
+            border-radius: 0;
             overflow: hidden;
+            position: relative;
         }
         
         .loading-progress {
@@ -181,41 +207,48 @@
             transition: width 5s linear;
         }
         
-        .loading-text {
-            color: #aaa;
-            font-size: 0.9rem;
-            white-space: nowrap;
-        }
-        
         /* Content Styles */
         .content {
             display: none;
             animation: fadeIn 1s ease-out;
         }
         
-        .location-card {
+        .access-granted {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .date-card {
             background: rgba(30, 30, 30, 0.8);
+            border-radius: 0;
             padding: 20px;
             margin: 20px 0;
             border-left: 3px solid #fff;
+            position: relative;
         }
         
-        .location-title {
+        .date {
             font-size: 1.3rem;
             color: #fff;
+            font-weight: bold;
             margin-bottom: 15px;
+            letter-spacing: 1px;
         }
         
         .details {
             display: flex;
             flex-direction: column;
             gap: 12px;
+            margin-top: 15px;
         }
         
         .detail-item {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
         
         .detail-icon {
@@ -228,10 +261,80 @@
             color: #ddd;
         }
         
+        .description {
+            line-height: 1.6;
+            margin-top: 20px;
+            padding: 12px;
+            background: rgba(40, 40, 40, 0.8);
+            border-radius: 0;
+            border-left: 2px solid #fff;
+            font-size: 0.9rem;
+        }
+        
+        /* Watch Dogs-style popups */
+        .wd-popup {
+            position: absolute;
+            width: 200px;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #fff;
+            border-radius: 0;
+            padding: 8px;
+            font-size: 0.7rem;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            opacity: 0;
+            transform: scale(0.9);
+            transition: all 0.3s ease;
+            z-index: 1;
+        }
+        
+        .wd-popup::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: #fff;
+        }
+        
+        .wd-popup-title {
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .floating-icon {
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg>');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(0 0 3px rgba(255, 255, 255, 0.5));
+            animation: float 3s ease-in-out infinite;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        
         /* Animations */
         @keyframes scanline {
             0% { transform: translateY(-100%); }
             100% { transform: translateY(100%); }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: #fff; }
+        }
+        
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
         }
         
         @keyframes fadeIn {
@@ -239,19 +342,54 @@
             to { opacity: 1; }
         }
         
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-5px) rotate(1deg); }
+        }
+        
+        @keyframes loadingDots {
+            0% { content: "DECRYPTING ACCESS"; }
+            25% { content: "DECRYPTING ACCESS."; }
+            50% { content: "DECRYPTING ACCESS.."; }
+            75% { content: "DECRYPTING ACCESS..."; }
+            100% { content: "DECRYPTING ACCESS"; }
+        }
+        
         @keyframes glitch-effect {
             0% { transform: translate(0); }
-            20% { transform: translate(-5px, 5px); }
-            40% { transform: translate(-5px, -5px); }
-            60% { transform: translate(5px, 5px); }
-            80% { transform: translate(5px, -5px); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(-3px, -3px); }
+            60% { transform: translate(3px, 3px); }
+            80% { transform: translate(3px, -3px); }
             100% { transform: translate(0); }
         }
         
         @keyframes glitch-disappear {
             0% { opacity: 1; }
             90% { opacity: 1; transform: scale(1); }
-            100% { opacity: 0; transform: scale(1.5); display: none; }
+            100% { opacity: 0; transform: scale(1.2); display: none; }
+        }
+        
+        .binary-rain {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            overflow: hidden;
+        }
+        
+        .binary-digit {
+            position: absolute;
+            color: #fff;
+            font-size: 14px;
+            animation: binaryFall linear infinite;
+        }
+        
+        @keyframes binaryFall {
+            to { transform: translateY(100vh); }
         }
     </style>
 </head>
@@ -266,42 +404,55 @@
         <div id="password-section">
             <div class="login-prompt">login:</div>
             <div class="password-form">
-                <input type="password" id="password-input" placeholder="enter access code">
-                <button onclick="checkPassword()">SUBMIT</button>
+                <input type="password" id="password-input" placeholder="type access code">
+                <button onclick="checkPassword()">execute</button>
             </div>
-            <p id="error-message" class="error">invalid credentials</p>
+            <p id="error-message" class="error">! invalid credentials</p>
             
             <div id="loading-screen" class="loading-screen">
-                <div class="loading-container">
-                    <div class="loading-text">authenticating</div>
-                    <div class="loading-bar">
-                        <div class="loading-progress" id="loading-progress"></div>
-                    </div>
+                <div class="loading-text"></div>
+                <div class="loading-bar">
+                    <div class="loading-progress" id="loading-progress"></div>
                 </div>
             </div>
         </div>
         
         <div id="content" class="content">
-            <div class="location-card">
-                <div class="location-title">MEETING POINT</div>
+            <div class="access-granted">access granted</div>
+            
+            <div class="date-card">
+                <div class="date">29.03.2025</div>
                 
                 <div class="details">
                     <div class="detail-item">
                         <span class="detail-icon">⌖</span>
-                        <span class="detail-text">Community Coffee Co</span>
+                        <span class="detail-text" id="place">Community Coffee Co</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-icon">⏳</span>
-                        <span class="detail-text">11:30</span>
+                        <span class="detail-text" id="time">11:30</span>
                     </div>
                     <div class="detail-item">
                         <span class="detail-icon">📍</span>
                         <span class="detail-text">Western Suburbs</span>
                     </div>
                 </div>
+                
+                <div class="description" id="description">
+                    location secured. meet point confirmed. casual protocol initialized.
+                </div>
             </div>
         </div>
     </div>
+
+    <!-- Floating white icon -->
+    <div class="floating-icon" id="floating-icon" style="top: 20%; left: 15%;"></div>
+
+    <!-- Watch Dogs popups -->
+    <div id="popup-container"></div>
+    
+    <!-- Binary rain effect -->
+    <div class="binary-rain" id="binary-rain"></div>
 
     <script>
         // Password check function
@@ -320,11 +471,13 @@
                 loadingScreen.style.display = 'flex';
                 loadingProgress.style.width = '100%';
                 
-                // Show loading screen for 3 seconds
+                // Show loading screen for 5 seconds
                 setTimeout(function() {
                     passwordSection.style.display = 'none';
+                    loadingScreen.style.display = 'none';
                     content.style.display = 'block';
-                }, 3000);
+                    stopPopups(); // Stop popups when content is shown
+                }, 5000);
                 
             } else {
                 // Password is incorrect
@@ -334,13 +487,151 @@
             }
         }
 
+        // Floating icon movement
+        const floatingIcon = document.getElementById('floating-icon');
+        let iconAngle = 0;
+        let iconX = 15;
+        let iconY = 20;
+        let iconXDir = 1;
+        let iconYDir = 1;
+        const iconSpeed = 0.15;
+
+        function moveIcon() {
+            iconX += iconXDir * iconSpeed;
+            iconY += iconYDir * iconSpeed;
+            
+            // Bounce off edges
+            if (iconX > 85 || iconX < 5) iconXDir *= -1;
+            if (iconY > 80 || iconY < 5) iconYDir *= -1;
+            
+            floatingIcon.style.left = `${iconX}%`;
+            floatingIcon.style.top = `${iconY}%`;
+            
+            // Slight rotation based on direction
+            iconAngle += iconXDir * 0.3;
+            floatingIcon.style.transform = `rotate(${iconAngle}deg)`;
+            
+            requestAnimationFrame(moveIcon);
+        }
+
+        // Watch Dogs-style popups
+        const popups = [
+            { title: "SYSTEM NOTICE", content: "Firewall active" },
+            { title: "NETWORK", content: "Bandwidth: 47Mbps" },
+            { title: "SECURITY", content: "Encryption: 256-bit" },
+            { title: "MEMORY", content: "Allocation: 78%" },
+            { title: "CPU", content: "Load: 32%" },
+            { title: "STORAGE", content: "Capacity: 1.2TB" },
+            { title: "PROCESS", content: "Threads: 48" },
+            { title: "CONNECTION", content: "Ping: 24ms" }
+        ];
+
+        const popupContainer = document.getElementById('popup-container');
+        let popupInterval;
+        let activePopups = 0;
+        const maxPopups = 3;
+
+        function createPopup() {
+            if (activePopups >= maxPopups) return;
+            
+            const popup = document.createElement('div');
+            popup.className = 'wd-popup';
+            
+            const randomPopup = popups[Math.floor(Math.random() * popups.length)];
+            popup.innerHTML = `
+                <div class="wd-popup-title">
+                    <span>${randomPopup.title}</span>
+                </div>
+                <div>${randomPopup.content}</div>
+            `;
+            
+            // Random position
+            const left = 5 + Math.random() * 70;
+            const top = 10 + Math.random() * 70;
+            popup.style.left = `${left}%`;
+            popup.style.top = `${top}%`;
+            
+            popupContainer.appendChild(popup);
+            activePopups++;
+            
+            // Animate in
+            setTimeout(() => {
+                popup.style.opacity = '1';
+                popup.style.transform = 'scale(1)';
+            }, 10);
+            
+            // Remove after delay
+            setTimeout(() => {
+                popup.style.opacity = '0';
+                popup.style.transform = 'scale(0.9)';
+                setTimeout(() => {
+                    popup.remove();
+                    activePopups--;
+                }, 300);
+            }, 2500);
+        }
+
+        function startPopups() {
+            popupInterval = setInterval(createPopup, 1200);
+            // Initial popups
+            setTimeout(createPopup, 400);
+            setTimeout(createPopup, 800);
+        }
+
+        function stopPopups() {
+            clearInterval(popupInterval);
+        }
+
+        // Binary rain effect
+        function createBinaryRain() {
+            const binaryRain = document.getElementById('binary-rain');
+            const digits = '01';
+            const columns = Math.floor(window.innerWidth / 18);
+            
+            for (let i = 0; i < columns; i++) {
+                const delay = Math.random() * 3;
+                const duration = 3 + Math.random() * 7;
+                const left = (i * 18) + 'px';
+                
+                const digit = document.createElement('div');
+                digit.className = 'binary-digit';
+                digit.style.left = left;
+                digit.style.animationDelay = delay + 's';
+                digit.style.animationDuration = duration + 's';
+                digit.textContent = digits.charAt(Math.floor(Math.random() * digits.length));
+                binaryRain.appendChild(digit);
+                
+                // Create a stream of digits
+                const digitCount = 15 + Math.floor(Math.random() * 10);
+                for (let j = 1; j < digitCount; j++) {
+                    setTimeout(() => {
+                        const newDigit = document.createElement('div');
+                        newDigit.className = 'binary-digit';
+                        newDigit.style.left = left;
+                        newDigit.style.animationDelay = delay + 's';
+                        newDigit.style.animationDuration = duration + 's';
+                        newDigit.textContent = digits.charAt(Math.floor(Math.random() * digits.length));
+                        binaryRain.appendChild(newDigit);
+                        
+                        // Remove old digits
+                        setTimeout(() => {
+                            newDigit.remove();
+                        }, duration * 1000);
+                    }, j * (duration / digitCount) * 1000);
+                }
+            }
+        }
+
         // Initialize
         window.onload = function() {
             // Show glitch intro, then show container
             setTimeout(() => {
                 document.querySelector('.container').style.display = 'block';
                 document.getElementById('password-input').focus();
-            }, 3000);
+                moveIcon();
+                startPopups();
+                createBinaryRain();
+            }, 3000); // Match glitch intro duration
         };
         
         // Allow pressing Enter to submit the password
