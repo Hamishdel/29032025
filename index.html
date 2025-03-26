@@ -163,7 +163,7 @@
             text-shadow: 0 0 5px rgba(255, 85, 85, 0.5);
         }
         
-        /* Loading Screen - Now centered under input */
+        /* Loading Screen */
         .loading-screen {
             display: none;
             flex-direction: column;
@@ -221,6 +221,44 @@
             letter-spacing: 2px;
         }
         
+        /* Watch Dogs Pink Explosion Transition */
+        .transition-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 50;
+            display: none;
+            pointer-events: none;
+        }
+        
+        .pink-explosion {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,0,150,0.8) 0%, rgba(0,0,0,0) 70%);
+            transform: scale(0);
+            animation: explosion 1.5s ease-out forwards;
+            left: -50%;
+            top: -50%;
+        }
+        
+        .data-transmission {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(0deg, rgba(0,0,0,0.9) 0%, transparent 50%),
+                repeating-linear-gradient(90deg, 
+                    transparent, 
+                    transparent 1px, 
+                    rgba(255,0,150,0.3) 1px, 
+                    rgba(255,0,150,0.3) 2px);
+            animation: dataStream 0.5s linear infinite;
+        }
+        
         .date-card {
             background: rgba(30, 30, 30, 0.8);
             border-radius: 0;
@@ -251,11 +289,6 @@
             gap: 8px;
         }
         
-        .detail-icon {
-            color: #fff;
-            font-size: 1.1rem;
-        }
-        
         .detail-text {
             font-size: 1rem;
             color: #ddd;
@@ -269,6 +302,14 @@
             border-radius: 0;
             border-left: 2px solid #fff;
             font-size: 0.9rem;
+        }
+        
+        .ride-notice {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #555;
+            font-size: 0.9rem;
+            color: #aaa;
         }
         
         /* Watch Dogs-style popups */
@@ -370,6 +411,17 @@
             100% { opacity: 0; transform: scale(1.2); display: none; }
         }
         
+        @keyframes explosion {
+            0% { transform: scale(0); opacity: 1; }
+            70% { opacity: 0.8; }
+            100% { transform: scale(3); opacity: 0; }
+        }
+        
+        @keyframes dataStream {
+            0% { background-position: 0 0; }
+            100% { background-position: 20px 0; }
+        }
+        
         .binary-rain {
             position: absolute;
             top: 0;
@@ -399,6 +451,12 @@
         <div class="glitch-text">SYSTEM INITIALIZING</div>
     </div>
 
+    <!-- Pink Explosion Transition -->
+    <div class="transition-effect" id="transition-effect">
+        <div class="pink-explosion"></div>
+        <div class="data-transmission"></div>
+    </div>
+
     <!-- Main Container -->
     <div class="container">
         <div id="password-section">
@@ -425,21 +483,22 @@
                 
                 <div class="details">
                     <div class="detail-item">
-                        <span class="detail-icon">⌖</span>
-                        <span class="detail-text" id="place">Community Coffee Co</span>
+                        <span class="detail-text">Community Coffee Co</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-icon">⏳</span>
-                        <span class="detail-text" id="time">11:30</span>
+                        <span class="detail-text">11:30 AM</span>
                     </div>
                     <div class="detail-item">
-                        <span class="detail-icon">📍</span>
                         <span class="detail-text">Western Suburbs</span>
                     </div>
                 </div>
                 
-                <div class="description" id="description">
-                    location secured. meet point confirmed. casual protocol initialized.
+                <div class="description">
+                    I hope you can come, if you need a ride to the place let me know - Hamish.
+                </div>
+
+                <div class="ride-notice">
+                    
                 </div>
             </div>
         </div>
@@ -464,6 +523,7 @@
             const loadingScreen = document.getElementById('loading-screen');
             const content = document.getElementById('content');
             const loadingProgress = document.getElementById('loading-progress');
+            const transitionEffect = document.getElementById('transition-effect');
             
             if (password === correctPassword) {
                 // Password is correct
@@ -475,8 +535,15 @@
                 setTimeout(function() {
                     passwordSection.style.display = 'none';
                     loadingScreen.style.display = 'none';
-                    content.style.display = 'block';
-                    stopPopups(); // Stop popups when content is shown
+                    
+                    // Show pink explosion transition
+                    transitionEffect.style.display = 'block';
+                    setTimeout(function() {
+                        transitionEffect.style.display = 'none';
+                        content.style.display = 'block';
+                        stopPopups(); // Stop popups when content is shown
+                    }, 1500);
+                    
                 }, 5000);
                 
             } else {
