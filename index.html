@@ -8,13 +8,13 @@
     <style>
         body {
             font-family: 'Share Tech Mono', monospace;
-            background-color: #0a0a0a;
+            background-color: #000;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             margin: 0;
-            color: #00ff00;
+            color: #fff;
             overflow: hidden;
             position: relative;
         }
@@ -39,6 +39,7 @@
             font-size: 2rem;
             text-transform: uppercase;
             position: relative;
+            color: #fff;
         }
         
         .glitch-text::before, .glitch-text::after {
@@ -51,26 +52,26 @@
         }
         
         .glitch-text::before {
-            color: #ff00ff;
+            color: #aaa;
             animation: glitch-effect 3s infinite;
             z-index: -1;
         }
         
         .glitch-text::after {
-            color: #00ffff;
+            color: #555;
             animation: glitch-effect 2s infinite reverse;
             z-index: -2;
         }
         
         .container {
-            background-color: rgba(10, 20, 10, 0.2);
+            background-color: rgba(20, 20, 20, 0.9);
             padding: 30px;
             border-radius: 0;
-            box-shadow: 0 0 30px rgba(0, 255, 0, 0.1);
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
             text-align: center;
             max-width: 500px;
             width: 90%;
-            border: 1px solid #00ff00;
+            border: 1px solid #fff;
             position: relative;
             overflow: hidden;
             z-index: 10;
@@ -78,7 +79,7 @@
             backdrop-filter: blur(5px);
         }
         
-        /* Green accent line */
+        /* White accent line */
         .container::before {
             content: "";
             position: absolute;
@@ -86,17 +87,17 @@
             left: 0;
             width: 3px;
             height: 100%;
-            background: #00ff00;
+            background: #fff;
             animation: scanline 2s linear infinite;
         }
         
         h1 {
-            color: #00ff00;
+            color: #fff;
             margin-bottom: 25px;
             font-size: 1.8rem;
             letter-spacing: 3px;
             text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 255, 0, 0.3);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
         }
         
         .password-form {
@@ -108,11 +109,11 @@
         
         input[type="password"] {
             padding: 15px;
-            background-color: rgba(0, 20, 0, 0.5);
-            border: 1px solid #008800;
+            background-color: rgba(10, 10, 10, 0.8);
+            border: 1px solid #555;
             border-radius: 0;
             font-size: 16px;
-            color: #00ff00;
+            color: #fff;
             text-align: center;
             letter-spacing: 2px;
             font-family: 'Share Tech Mono', monospace;
@@ -120,20 +121,20 @@
         }
         
         input[type="password"]::placeholder {
-            color: #008800;
+            color: #555;
             letter-spacing: normal;
         }
         
         input[type="password"]:focus {
             outline: none;
-            border-color: #00ff00;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.3);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
         }
         
         button {
             background: transparent;
-            color: #00ff00;
-            border: 1px solid #00ff00;
+            color: #fff;
+            border: 1px solid #fff;
             padding: 15px;
             border-radius: 0;
             cursor: pointer;
@@ -146,16 +147,16 @@
         }
         
         button:hover {
-            background: rgba(0, 255, 0, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
         
         .error {
-            color: #ff0000;
+            color: #ff5555;
             margin-top: 15px;
             display: none;
             font-size: 14px;
-            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+            text-shadow: 0 0 5px rgba(255, 85, 85, 0.5);
         }
         
         /* Loading Screen */
@@ -172,16 +173,16 @@
         .loading-icon {
             width: 60px;
             height: 60px;
-            border: 3px solid #00ff00;
-            border-radius: 50%;
+            border: 3px solid #fff;
             border-top-color: transparent;
+            border-radius: 50%;
             animation: spin 1s linear infinite;
         }
         
         .loading-bar {
             width: 100%;
             height: 3px;
-            background: rgba(0, 80, 0, 0.5);
+            background: rgba(85, 85, 85, 0.5);
             border-radius: 0;
             overflow: hidden;
             position: relative;
@@ -190,12 +191,12 @@
         .loading-progress {
             height: 100%;
             width: 0%;
-            background: #00ff00;
+            background: #fff;
             transition: width 5s linear;
         }
         
         .loading-text {
-            color: #00aa00;
+            color: #aaa;
             font-size: 1rem;
             position: relative;
             height: 20px;
@@ -216,17 +217,17 @@
         }
         
         .date-card {
-            background: rgba(0, 20, 0, 0.3);
+            background: rgba(30, 30, 30, 0.8);
             border-radius: 0;
             padding: 25px;
             margin: 20px 0;
-            border-left: 3px solid #00ff00;
+            border-left: 3px solid #fff;
             position: relative;
         }
         
         .date {
             font-size: 1.5rem;
-            color: #00ff00;
+            color: #fff;
             font-weight: bold;
             margin-bottom: 15px;
             letter-spacing: 2px;
@@ -247,34 +248,34 @@
         }
         
         .detail-icon {
-            color: #00ff00;
+            color: #fff;
             font-size: 1.3rem;
         }
         
         .detail-text {
             font-size: 1.1rem;
-            color: #00cc00;
+            color: #ddd;
         }
         
         .description {
             line-height: 1.6;
             margin-top: 25px;
             padding: 15px;
-            background: rgba(0, 30, 0, 0.3);
+            background: rgba(40, 40, 40, 0.8);
             border-radius: 0;
-            border-left: 2px solid #00ff00;
+            border-left: 2px solid #fff;
         }
         
         /* Watch Dogs-style popups */
         .wd-popup {
             position: absolute;
             width: 200px;
-            background: rgba(10, 30, 10, 0.9);
-            border: 1px solid #00ff00;
+            background: rgba(30, 30, 30, 0.95);
+            border: 1px solid #fff;
             border-radius: 0;
             padding: 10px;
             font-size: 0.8rem;
-            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
             opacity: 0;
             transform: scale(0.9);
             transition: all 0.3s ease;
@@ -288,11 +289,11 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: #00ff00;
+            background: #fff;
         }
         
         .wd-popup-title {
-            color: #00ff00;
+            color: #fff;
             font-weight: bold;
             margin-bottom: 5px;
             display: flex;
@@ -304,11 +305,11 @@
             position: absolute;
             width: 30px;
             height: 30px;
-            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%2300ff00"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg>');
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ffffff"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L10 14.17l-2.59-2.58L6 13l4 4 8-8z"/></svg>');
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            filter: drop-shadow(0 0 5px rgba(0, 255, 0, 0.5));
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
             animation: float 3s ease-in-out infinite;
             z-index: 0;
             opacity: 0.5;
@@ -386,7 +387,7 @@
         
         .binary-digit {
             position: absolute;
-            color: #00ff00;
+            color: #fff;
             font-size: 16px;
             animation: binaryFall linear infinite;
         }
@@ -444,13 +445,13 @@
                 </div>
                 
                 <div class="description" id="description">
-                    Location secured. Ill be waing here if you need a ride i can pick you up
+                    Location secured. Meet point confirmed. Casual interaction protocol initialized.
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Floating green icon -->
+    <!-- Floating white icon -->
     <div class="floating-icon" id="floating-icon" style="top: 20%; left: 15%;"></div>
 
     <!-- Watch Dogs popups -->
