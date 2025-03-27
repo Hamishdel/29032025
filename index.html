@@ -127,8 +127,7 @@
             margin-bottom: 5px;
         }
         
-        input[type="text"],
-        input[type="password"] {
+        input[type="text"] {
             padding: 12px;
             background-color: rgba(10, 10, 10, 0.8);
             border: 1px solid #555;
@@ -203,7 +202,7 @@
         }
         
         .loading-text::after {
-            content: "DECRYPTING ACCESS";
+            content: "VERIFYING DATE";
             position: absolute;
             left: 0;
             top: 0;
@@ -313,7 +312,7 @@
             color: #ddd;
         }
         
-        .description {
+        .message {
             line-height: 1.6;
             margin-top: 20px;
             padding: 12px;
@@ -321,14 +320,6 @@
             border-radius: 0;
             border-left: 2px solid #fff;
             font-size: 0.9rem;
-        }
-        
-        .ride-notice {
-            margin-top: 30px;
-            padding-top: 15px;
-            border-top: 1px solid #555;
-            font-size: 0.9rem;
-            color: #aaa;
         }
         
         /* Watch Dogs-style popups */
@@ -408,11 +399,11 @@
         }
         
         @keyframes loadingDots {
-            0% { content: "DECRYPTING ACCESS"; }
-            25% { content: "DECRYPTING ACCESS."; }
-            50% { content: "DECRYPTING ACCESS.."; }
-            75% { content: "DECRYPTING ACCESS..."; }
-            100% { content: "DECRYPTING ACCESS"; }
+            0% { content: "VERIFYING DATE"; }
+            25% { content: "VERIFYING DATE."; }
+            50% { content: "VERIFYING DATE.."; }
+            75% { content: "VERIFYING DATE..."; }
+            100% { content: "VERIFYING DATE"; }
         }
         
         @keyframes glitch-effect {
@@ -495,10 +486,9 @@
                         <input type="text" id="year-input" placeholder="YYYY" maxlength="4">
                     </div>
                 </div>
-                <input type="password" id="password-input" placeholder="enter birthday (DDMMYYYY)">
                 <button onclick="checkPassword()">authenticate</button>
             </div>
-            <p id="error-message" class="error">! invalid credentials</p>
+            <p id="error-message" class="error">! invalid date</p>
             
             <div id="loading-screen" class="loading-screen">
                 <div class="loading-text"></div>
@@ -512,7 +502,7 @@
             <div class="access-granted">access granted</div>
             
             <div class="date-card">
-                <div class="date" id="display-date">29.03.2025</div>
+                <div class="date">29.03.2025</div>
                 
                 <div class="details">
                     <div class="detail-item">
@@ -526,12 +516,8 @@
                     </div>
                 </div>
                 
-                <div class="description">
-                    location secured. meet point confirmed. casual protocol initialized.
-                </div>
-
-                <div class="ride-notice">
-                    if you need a ride to the place let me know
+                <div class="message">
+                    Hello, let me know what you think. If you need a ride let me know. But message me.<br><br>- Hamish
                 </div>
             </div>
         </div>
@@ -552,28 +538,22 @@
             const day = document.getElementById('day-input').value;
             const month = document.getElementById('month-input').value;
             const year = document.getElementById('year-input').value;
-            const password = document.getElementById('password-input').value;
             
-            const correctPassword = '12042008';
+            const correctDay = '12';
+            const correctMonth = '04';
+            const correctYear = '2008';
             const errorMessage = document.getElementById('error-message');
             const passwordSection = document.getElementById('password-section');
             const loadingScreen = document.getElementById('loading-screen');
             const content = document.getElementById('content');
             const loadingProgress = document.getElementById('loading-progress');
             const transitionEffect = document.getElementById('transition-effect');
-            const displayDate = document.getElementById('display-date');
             
-            // Format the date from inputs
-            const formattedDate = `${day.padStart(2, '0')}.${month.padStart(2, '0')}.${year}`;
-            
-            if (password === correctPassword && day && month && year) {
-                // Password is correct and date is entered
+            if (day === correctDay && month === correctMonth && year === correctYear) {
+                // Date is correct
                 errorMessage.style.display = 'none';
                 loadingScreen.style.display = 'flex';
                 loadingProgress.style.width = '100%';
-                
-                // Set the display date
-                displayDate.textContent = formattedDate;
                 
                 // Show loading screen for 5 seconds
                 setTimeout(function() {
@@ -591,10 +571,12 @@
                 }, 5000);
                 
             } else {
-                // Password is incorrect or date missing
+                // Date is incorrect
                 errorMessage.style.display = 'block';
-                document.getElementById('password-input').value = '';
-                document.getElementById('password-input').focus();
+                document.getElementById('day-input').value = '';
+                document.getElementById('month-input').value = '';
+                document.getElementById('year-input').value = '';
+                document.getElementById('day-input').focus();
             }
         }
 
@@ -750,12 +732,6 @@
                     yearInput.focus();
                 }
             });
-            
-            yearInput.addEventListener('input', function() {
-                if (this.value.length >= 4) {
-                    document.getElementById('password-input').focus();
-                }
-            });
         }
 
         // Initialize
@@ -771,8 +747,8 @@
             }, 3000); // Match glitch intro duration
         };
         
-        // Allow pressing Enter to submit the password
-        document.getElementById('password-input').addEventListener('keyup', function(event) {
+        // Allow pressing Enter to submit from year input
+        document.getElementById('year-input').addEventListener('keyup', function(event) {
             if (event.key === 'Enter') {
                 checkPassword();
             }
